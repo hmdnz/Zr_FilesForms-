@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Simple HTML Form</title>
+    <script>
+        function validateForm() {
+            const firstName = document.forms["myForm"]["firstName"].value;
+            const lastName = document.forms["myForm"]["lastName"].value;
+            const otherNames = document.forms["myForm"]["otherNames"].value;
+            const email = document.forms["myForm"]["email"].value;
+            const phoneNumber = document.forms["myForm"]["phoneNumber"].value;
+            const gender = document.forms["myForm"]["gender"].value;
+            
+            let errors = [];
+            
+            if (!firstName || firstName.length < 1 || /\d/.test(firstName)) {
+                errors.push("First name is required, must be at least 1 character, and cannot contain numbers.");
+            }
+            
+            if (!lastName || lastName.length < 1 || /\d/.test(lastName)) {
+                errors.push("Last name is required, must be at least 1 character, and cannot contain numbers.");
+            }
+            
+            if (otherNames && /\d/.test(otherNames)) {
+                errors.push("Other names cannot contain numbers.");
+            }
+            
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailPattern.test(email)) {
+                errors.push("Email must be a valid email address.");
+            }
+            
+            if (phoneNumber.length != 10) {
+                errors.push("Phone number must be exactly 10 characters.");
+            }
+            
+            if (!gender) {
+                errors.push("Gender is required.");
+            }
+            
+            if (errors.length > 0) {
+                alert(errors.join("\n"));
+                return false;
+            }
+            
+            return true;
+        }
+    </script>
+</head>
+<body>
+    <h2>Simple HTML Form</h2>
+    <form name="myForm" action="submit_form.py" method="POST" onsubmit="return validateForm()">
+        <label for="firstName">First Name:</label>
+        <input type="text" id="firstName" name="firstName"><br><br>
+        <label for="lastName">Last Name:</label>
+        <input type="text" id="lastName" name="lastName"><br><br>
+        <label for="otherNames">Other Names:</label>
+        <input type="text" id="otherNames" name="otherNames"><br><br>
+        <label for="email">Email:</label>
+        <input type="text" id="email" name="email"><br><br>
+        <label for="phoneNumber">Phone Number:</label>
+        <input type="text" id="phoneNumber" name="phoneNumber"><br><br>
+        <label for="gender">Gender:</label>
+        <select id="gender" name="gender">
+            <option value="">Select</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="other">Other</option>
+        </select><br><br>
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>
